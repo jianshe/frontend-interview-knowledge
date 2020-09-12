@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>深入理解javascript原型和闭包—隐式原型 | 大前端宝典</title>
+    <meta name="generator" content="VuePress 1.5.4">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" content="每天至少一个问题，有关前端，后端，graphql，devops，微服务以及软技能，促进个人职业成长，敲开大厂之门。">
+    <link rel="preload" href="/assets/css/0.styles.49f7e903.css" as="style"><link rel="preload" href="/assets/js/app.e93d2a32.js" as="script"><link rel="preload" href="/assets/js/2.81c294c3.js" as="script"><link rel="preload" href="/assets/js/5.6d1b4fcf.js" as="script"><link rel="prefetch" href="/assets/js/10.eba3a9fd.js"><link rel="prefetch" href="/assets/js/11.d6bf126e.js"><link rel="prefetch" href="/assets/js/12.8cc53668.js"><link rel="prefetch" href="/assets/js/13.0fe1c07e.js"><link rel="prefetch" href="/assets/js/14.c5bfcaa2.js"><link rel="prefetch" href="/assets/js/15.25110eed.js"><link rel="prefetch" href="/assets/js/16.603e276f.js"><link rel="prefetch" href="/assets/js/3.60646a0c.js"><link rel="prefetch" href="/assets/js/4.ebf138f2.js"><link rel="prefetch" href="/assets/js/6.f90f26e3.js"><link rel="prefetch" href="/assets/js/7.2ddc93ba.js"><link rel="prefetch" href="/assets/js/8.d331eb7d.js"><link rel="prefetch" href="/assets/js/9.7765ff86.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.49f7e903.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">大前端宝典</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/css3/" class="nav-link">
+  css3
+</a></div><div class="nav-item"><a href="/js/" class="nav-link router-link-active">
+  js
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/css3/" class="nav-link">
+  css3
+</a></div><div class="nav-item"><a href="/js/" class="nav-link router-link-active">
+  js
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h3 id="深入理解javascript原型和闭包-隐式原型"><a href="#深入理解javascript原型和闭包-隐式原型" class="header-anchor">#</a> 深入理解javascript原型和闭包—隐式原型</h3> <blockquote><p>每个函数function都有一个prototype，即原型。每个对象都有一个__proto__，可成为隐式原型。</p></blockquote> <p>这个__proto__是一个隐藏的属性，javascript不希望开发者用到这个属性值，有的低版本浏览器甚至不支持这个属性值。所以一般编辑器中，都不会有__proto__的智能提示，但是你不用管它，直接写出来就是了。
+<img src="/assets/img/181508340651970.6fa0be1b.png" alt="16f879b5b51541a1"></p> <p>上面截图看来，obj.__proto__和Object.prototype的属性一样！</p> <p>obj这个对象本质上是被Object函数创建的，因此obj.<strong>proto</strong> === Object.prototype。如下图所示：</p> <p><img src="/assets/img/181509180812624.924f5251.png" alt="16f879b5b51541a1"></p> <p>即，<strong>每个对象都有一个proto属性，指向创建该对象的函数的prototype。</strong></p> <p>但是<strong>Object.prototype确定是一个特例--它的proto指向的是null，切记切记！</strong></p> <p>函数也是一种对象，函数也有__proto__属性</p> <p>函数也是被创建出来的，谁创建了函数呢？答案是Function，注意这个大写的&quot;F&quot;。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">fn</span><span class="token punctuation">(</span><span class="token parameter">x<span class="token punctuation">,</span>y</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> x<span class="token operator">+</span> y<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> fn1  <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Function</span><span class="token punctuation">(</span><span class="token string">&quot;x&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;y&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;return x+ y;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">fn1</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>以上代码中，第一种方式是比较传统的创建函数的方式，第二种是用new Function创建的。</p> <p><strong>不推荐使用第二种方式创建函数，这里只是向大家演示，函数是被Function创建的。</strong></p> <p>根据上面的一句话--对象的__proto__指向的是创建它的函数的prototype，就会出现:Object.<strong>proto</strong> === Function.prototype。如下图所示：</p> <p>上图中，很明显的标出了：自定义函数Foo.__proto__指向Function.prototype，Object.__proto__指向Function.prototype，唉，怎么还有一个.......Function.__proto__指向Function.prototype?这不成了循环引用了？</p> <p>对！是一个环形结构。</p> <p>Function也是一个函数，函数是一种对象，也有__proto__属性。既然是函数，那么它一定是被Function创建的。所以Function是被自身创建的。所以它的__proto__指向了自身的prototype。</p> <p>最后一个问题，Function.prototype指向的对象，它的__proto__是不是也指向Object.prototype？</p> <p>答案是肯定的，因为Function.prototype指向的也是一个普通的被Object创建的对象，所以也遵循基本的规则。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.e93d2a32.js" defer></script><script src="/assets/js/2.81c294c3.js" defer></script><script src="/assets/js/5.6d1b4fcf.js" defer></script>
+  </body>
+</html>

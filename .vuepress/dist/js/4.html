@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>深入理解javascript原型和闭包—一切都是对象 | 大前端宝典</title>
+    <meta name="generator" content="VuePress 1.5.4">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" content="每天至少一个问题，有关前端，后端，graphql，devops，微服务以及软技能，促进个人职业成长，敲开大厂之门。">
+    <link rel="preload" href="/assets/css/0.styles.49f7e903.css" as="style"><link rel="preload" href="/assets/js/app.e93d2a32.js" as="script"><link rel="preload" href="/assets/js/2.81c294c3.js" as="script"><link rel="preload" href="/assets/js/12.8cc53668.js" as="script"><link rel="prefetch" href="/assets/js/10.eba3a9fd.js"><link rel="prefetch" href="/assets/js/11.d6bf126e.js"><link rel="prefetch" href="/assets/js/13.0fe1c07e.js"><link rel="prefetch" href="/assets/js/14.c5bfcaa2.js"><link rel="prefetch" href="/assets/js/15.25110eed.js"><link rel="prefetch" href="/assets/js/16.603e276f.js"><link rel="prefetch" href="/assets/js/3.60646a0c.js"><link rel="prefetch" href="/assets/js/4.ebf138f2.js"><link rel="prefetch" href="/assets/js/5.6d1b4fcf.js"><link rel="prefetch" href="/assets/js/6.f90f26e3.js"><link rel="prefetch" href="/assets/js/7.2ddc93ba.js"><link rel="prefetch" href="/assets/js/8.d331eb7d.js"><link rel="prefetch" href="/assets/js/9.7765ff86.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.49f7e903.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">大前端宝典</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/css3/" class="nav-link">
+  css3
+</a></div><div class="nav-item"><a href="/js/" class="nav-link router-link-active">
+  js
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/css3/" class="nav-link">
+  css3
+</a></div><div class="nav-item"><a href="/js/" class="nav-link router-link-active">
+  js
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h3 id="深入理解javascript原型和闭包-一切都是对象"><a href="#深入理解javascript原型和闭包-一切都是对象" class="header-anchor">#</a> 深入理解javascript原型和闭包—一切都是对象</h3> <h4 id="javascript中的数据类型"><a href="#javascript中的数据类型" class="header-anchor">#</a> javascript中的数据类型</h4> <ul><li><p>值类型</p> <p>undefined、null、number、string、boolean</p></li> <li><p>引用类型</p> <p>函数、数组、对象、new Number(10)</p></li></ul> <h4 id="对象-若干属性的集合"><a href="#对象-若干属性的集合" class="header-anchor">#</a> 对象--若干属性的集合</h4> <p>​	java或者c#中的对象都是new一个class出来的，而且里面有字段、属性、方法，规定的非常严格。但是javascript就比较随意了--数组是对象，函数是对象，对象还是对象。对象里面的一切都是属性，没有方法，那么这样方法如何表示呢？<strong>方法也是一种属性。因为它的属性表示为键值对的形式。</strong></p> <h4 id="javascript中的对象可以任意的扩展属性"><a href="#javascript中的对象可以任意的扩展属性" class="header-anchor">#</a> javascript中的对象可以任意的扩展属性</h4> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span>
+    a<span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">b</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">alert</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>a <span class="token operator">+</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    c<span class="token operator">:</span> <span class="token punctuation">{</span>
+        name<span class="token operator">:</span> <span class="token string">'albert'</span><span class="token punctuation">,</span>
+        year<span class="token operator">:</span> <span class="token number">1990</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>以上代码中，obj是一个自定义的对象，其中a、b、c就是它的属性，而且在c的属性值还是一个对象，它又有name，year两个属性。</p> <p><strong>函数和数组可以以另一种形式呈现，只要是对象，它就是属性的集合</strong></p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">var</span> <span class="token function-variable function">fn</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+fn<span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+fn<span class="token punctuation">.</span><span class="token function-variable function">b</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+fn<span class="token punctuation">.</span>c <span class="token operator">=</span> <span class="token punctuation">{</span>
+    name<span class="token operator">:</span> <span class="token string">'albert'</span><span class="token punctuation">,</span>
+    year<span class="token operator">:</span> <span class="token number">1990</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>以上代码中，函数就作为对象被赋值了a、b、c三个属性--很明显，这就是属性的集合。</p> <blockquote><p>一切（引用类型）都是对象，对象是属性的集合，和java和c#完全不一样。</p></blockquote></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.e93d2a32.js" defer></script><script src="/assets/js/2.81c294c3.js" defer></script><script src="/assets/js/12.8cc53668.js" defer></script>
+  </body>
+</html>
