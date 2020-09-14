@@ -9,3 +9,4 @@
 + [【Q009】 深入理解javascript原型和闭包之[继承]](9.html)
 + [【Q010】 深入理解javascript原型和闭包之[简述执行上下文-上]](10.html)
 + [【Q011】 深入理解javascript原型和闭包之[简述执行上下文-下]](11.html)
++ [【Q012】 深入理解javascript原型和闭包之[this]](12.html)
