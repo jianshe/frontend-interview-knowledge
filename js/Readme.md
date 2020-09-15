@@ -10,3 +10,7 @@
 + [【Q010】 深入理解javascript原型和闭包之[简述执行上下文-上]](10.html)
 + [【Q011】 深入理解javascript原型和闭包之[简述执行上下文-下]](11.html)
 + [【Q012】 深入理解javascript原型和闭包之[this]](12.html)
++ [【Q013】 深入理解javascript原型和闭包之[执行上下文栈]](13.html)
++ [【Q014】 深入理解javascript原型和闭包之[简介--作用域]](14.html)
++ [【Q015】 深入理解javascript原型和闭包之[作用域和执行上下文环境]](15.html)
++ [【Q020】 javascript的new操作都做了什么？](20.html)
