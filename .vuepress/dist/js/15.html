@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>深入理解javascript原型和闭包—[作用域]和[上下文环境] | 大前端宝典</title>
+    <meta name="generator" content="VuePress 1.5.4">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" content="每天至少一个问题，有关前端，后端，graphql，devops，微服务以及软技能，促进个人职业成长，敲开大厂之门。">
+    <link rel="preload" href="/assets/css/0.styles.49f7e903.css" as="style"><link rel="preload" href="/assets/js/app.f8cad3ae.js" as="script"><link rel="preload" href="/assets/js/2.07df6560.js" as="script"><link rel="preload" href="/assets/js/5.97604b6e.js" as="script"><link rel="prefetch" href="/assets/js/10.cb43dc12.js"><link rel="prefetch" href="/assets/js/11.47c44fb6.js"><link rel="prefetch" href="/assets/js/12.004a3c80.js"><link rel="prefetch" href="/assets/js/13.6b21beb8.js"><link rel="prefetch" href="/assets/js/14.f9c75b2f.js"><link rel="prefetch" href="/assets/js/15.1ccd1fc6.js"><link rel="prefetch" href="/assets/js/16.00455f8d.js"><link rel="prefetch" href="/assets/js/17.cd57f294.js"><link rel="prefetch" href="/assets/js/18.6731cb69.js"><link rel="prefetch" href="/assets/js/19.728ff59f.js"><link rel="prefetch" href="/assets/js/20.2104f081.js"><link rel="prefetch" href="/assets/js/21.bb25024e.js"><link rel="prefetch" href="/assets/js/22.1e68538e.js"><link rel="prefetch" href="/assets/js/23.24473ec9.js"><link rel="prefetch" href="/assets/js/24.e84671c3.js"><link rel="prefetch" href="/assets/js/25.02ca11fe.js"><link rel="prefetch" href="/assets/js/26.1108b6bf.js"><link rel="prefetch" href="/assets/js/27.4725fe4b.js"><link rel="prefetch" href="/assets/js/3.9d6ccff3.js"><link rel="prefetch" href="/assets/js/4.2158717e.js"><link rel="prefetch" href="/assets/js/6.90b281da.js"><link rel="prefetch" href="/assets/js/7.58af157e.js"><link rel="prefetch" href="/assets/js/8.1279534c.js"><link rel="prefetch" href="/assets/js/9.f0c948b5.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.49f7e903.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">大前端宝典</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/css3/" class="nav-link">
+  css3
+</a></div><div class="nav-item"><a href="/js/" class="nav-link router-link-active">
+  js
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/css3/" class="nav-link">
+  css3
+</a></div><div class="nav-item"><a href="/js/" class="nav-link router-link-active">
+  js
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h3 id="深入理解javascript原型和闭包-作用域-和-上下文环境"><a href="#深入理解javascript原型和闭包-作用域-和-上下文环境" class="header-anchor">#</a> 深入理解javascript原型和闭包—[作用域]和[上下文环境]</h3> <p>本文把作用域和上下文环境结合起来说一下，会理解的更深 一些。</p> <p>如上图，我们在上文中已经介绍了，除了全局作用域之外，每个函数都会创建自己的作用域，<strong>作用域在函数定义时就已经确定了。而不是在函数调用时确定。</strong></p> <p>下面我们将按照程序执行的顺序，一步一步把各个上下文环境加上， 另外，对上下文环境不了解的朋友，可以去看看之前的两篇文章:</p> <p>[深入理解javascript原型和闭包之[执行上下文栈] ][13.html]</p> <p>[深入理解javascript原型和闭包之[简介--作用域] ][14.html]</p> <p>第一步，在加载程序时， 已经确定了全局上下文环境，并随着程序的执行而对变量进行赋值。</p> <img src="/assets/img/scope1.611e0bf6.png" width="560" height="500"> <p>第二步，调用fn(10)，此时生成此次调用fn函数的上下文环境，压栈，并将此上下文环境设置为活动状态。</p> <img src="/assets/img/scope2.f52c30fa.png" width="560" height="500"> <p>第三步，调用bar(100),生成此次调用的上下文环境，压栈，并设置为活动状态。</p> <img src="/assets/img/scope3.ef7c69e5.png" width="560" height="500"> <p>第四步，bar(100)调用完成。则bar(100)上下文环境被销毁。接着调用bar(200)，则又生成bar(200)的上下文环境，压栈，设置为活动状态。</p> <img src="/assets/img/scope4.7e3a04a8.png" width="560" height="500"> <p>第五步，bar(200)调用结束，其上下文环境被销毁，此时会回到fn(10)上下文环境，变为活动状态。</p> <img src="/assets/img/scope2.f52c30fa.png" width="560" height="500"> <p>第六步，fn(10)执行完成之后，fn(10)上下文环境被销毁，全局上下文环境又回到活动状态。</p> <img src="/assets/img/scope1.611e0bf6.png" width="560" height="500"> <p>结束了。像老太太的裹脚布--又臭又长！</p> <p>最后我们可以把以上这几个图片连接起来看看。</p> <img src="/assets/img/scope6.83713281.png" width="800" height="560"> <p>连接起来看，还是挺有意思的。<strong>作用域只是一个&quot;地盘&quot;，一个抽象的概念，其中没有变量。要通过作用域对应的执行上下文环境来获取变量的值。</strong>
+同一个作用域下，不同的调用会产生不同的执行上下文环境，继而产生不同的变量的值。所以，<strong>作用域中变量的值是在执行过程中产生的确定的。而作用域却是在函数创建时就确定了。</strong></p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">9/16/2020, 1:44:38 AM</span></div></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.f8cad3ae.js" defer></script><script src="/assets/js/2.07df6560.js" defer></script><script src="/assets/js/5.97604b6e.js" defer></script>
+  </body>
+</html>
