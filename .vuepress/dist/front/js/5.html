@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>深入理解javascript原型和闭包—函数和对象的关系 | 大前端宝典</title>
+    <meta name="generator" content="VuePress 1.5.4">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" content="每天至少一个问题，有关前端，后端，graphql，devops，微服务以及软技能，促进个人职业成长，敲开大厂之门。">
+    <link rel="preload" href="/assets/css/0.styles.49f7e903.css" as="style"><link rel="preload" href="/assets/js/app.23524ab7.js" as="script"><link rel="preload" href="/assets/js/2.4b085c19.js" as="script"><link rel="preload" href="/assets/js/27.dbec4f43.js" as="script"><link rel="prefetch" href="/assets/js/10.ee5396e8.js"><link rel="prefetch" href="/assets/js/11.2452dac9.js"><link rel="prefetch" href="/assets/js/12.ee7f806c.js"><link rel="prefetch" href="/assets/js/13.6846191f.js"><link rel="prefetch" href="/assets/js/14.642107b1.js"><link rel="prefetch" href="/assets/js/15.2bc4c1f7.js"><link rel="prefetch" href="/assets/js/16.2e738211.js"><link rel="prefetch" href="/assets/js/17.50d14f43.js"><link rel="prefetch" href="/assets/js/18.6e407510.js"><link rel="prefetch" href="/assets/js/19.8a3c62fa.js"><link rel="prefetch" href="/assets/js/20.980ba8ff.js"><link rel="prefetch" href="/assets/js/21.5d15a2db.js"><link rel="prefetch" href="/assets/js/22.ce508e85.js"><link rel="prefetch" href="/assets/js/23.b02b43f1.js"><link rel="prefetch" href="/assets/js/24.4af3b9b8.js"><link rel="prefetch" href="/assets/js/25.66df5858.js"><link rel="prefetch" href="/assets/js/26.24afa34e.js"><link rel="prefetch" href="/assets/js/28.875614ec.js"><link rel="prefetch" href="/assets/js/29.ee78177e.js"><link rel="prefetch" href="/assets/js/3.75d04044.js"><link rel="prefetch" href="/assets/js/30.b7deef22.js"><link rel="prefetch" href="/assets/js/31.958a6bd0.js"><link rel="prefetch" href="/assets/js/4.6f8f1600.js"><link rel="prefetch" href="/assets/js/5.24fc9d20.js"><link rel="prefetch" href="/assets/js/6.bfe2e6eb.js"><link rel="prefetch" href="/assets/js/7.81fa3166.js"><link rel="prefetch" href="/assets/js/8.20ae270d.js"><link rel="prefetch" href="/assets/js/9.bb64e86b.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.49f7e903.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">大前端宝典</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/house/" class="nav-link">
+  house
+</a></div><div class="nav-item"><a href="/front/" class="nav-link router-link-active">
+  大前端
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/house/" class="nav-link">
+  house
+</a></div><div class="nav-item"><a href="/front/" class="nav-link router-link-active">
+  大前端
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h3 id="深入理解javascript原型和闭包-函数和对象的关系"><a href="#深入理解javascript原型和闭包-函数和对象的关系" class="header-anchor">#</a> 深入理解javascript原型和闭包—函数和对象的关系</h3> <blockquote><p>函数是一种对象，但是函数却不像数组一样--你可以说数组是对象的一种，因为数组就像是对象的一个子集一样。但是函数与对象之间，却不仅仅是一种包含和被包含的关系，函数和对象之间的关系比较复杂，甚至有一点鸡生蛋蛋生鸡的逻辑</p></blockquote> <h4 id="对象都是通过函数来创建的"><a href="#对象都是通过函数来创建的" class="header-anchor">#</a> 对象都是通过函数来创建的</h4> <p>有些人可能反驳：不对！因为：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span>a<span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>b<span class="token operator">:</span> <span class="token number">20</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token string">'x'</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre></div><p>但是这只是一种“快捷方式“，在编程语言中，一般叫做”语法糖“。</p> <p>其实以上代码的本质是：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+obj<span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+obj<span class="token punctuation">.</span>b <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+arr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+arr<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'x'</span><span class="token punctuation">;</span>
+arr<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+</code></pre></div><p>其中的Object和Array都是函数：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> Object<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// function</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> Array<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// function</span>
+</code></pre></div><p>所以，可以这样说--<strong>对象都是通过函数来创建的</strong></p> <blockquote><p>对象是函数创建的，而函数却又是一种对象，那函数和对象到底是什么关系呢？下节会重点讲述prototype原型</p></blockquote></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.23524ab7.js" defer></script><script src="/assets/js/2.4b085c19.js" defer></script><script src="/assets/js/27.dbec4f43.js" defer></script>
+  </body>
+</html>

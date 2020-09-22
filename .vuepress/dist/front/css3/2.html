@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>如何实现一个元素的水平垂直居中 | 大前端宝典</title>
+    <meta name="generator" content="VuePress 1.5.4">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" content="每天至少一个问题，有关前端，后端，graphql，devops，微服务以及软技能，促进个人职业成长，敲开大厂之门。">
+    <link rel="preload" href="/assets/css/0.styles.49f7e903.css" as="style"><link rel="preload" href="/assets/js/app.23524ab7.js" as="script"><link rel="preload" href="/assets/js/2.4b085c19.js" as="script"><link rel="preload" href="/assets/js/19.8a3c62fa.js" as="script"><link rel="prefetch" href="/assets/js/10.ee5396e8.js"><link rel="prefetch" href="/assets/js/11.2452dac9.js"><link rel="prefetch" href="/assets/js/12.ee7f806c.js"><link rel="prefetch" href="/assets/js/13.6846191f.js"><link rel="prefetch" href="/assets/js/14.642107b1.js"><link rel="prefetch" href="/assets/js/15.2bc4c1f7.js"><link rel="prefetch" href="/assets/js/16.2e738211.js"><link rel="prefetch" href="/assets/js/17.50d14f43.js"><link rel="prefetch" href="/assets/js/18.6e407510.js"><link rel="prefetch" href="/assets/js/20.980ba8ff.js"><link rel="prefetch" href="/assets/js/21.5d15a2db.js"><link rel="prefetch" href="/assets/js/22.ce508e85.js"><link rel="prefetch" href="/assets/js/23.b02b43f1.js"><link rel="prefetch" href="/assets/js/24.4af3b9b8.js"><link rel="prefetch" href="/assets/js/25.66df5858.js"><link rel="prefetch" href="/assets/js/26.24afa34e.js"><link rel="prefetch" href="/assets/js/27.dbec4f43.js"><link rel="prefetch" href="/assets/js/28.875614ec.js"><link rel="prefetch" href="/assets/js/29.ee78177e.js"><link rel="prefetch" href="/assets/js/3.75d04044.js"><link rel="prefetch" href="/assets/js/30.b7deef22.js"><link rel="prefetch" href="/assets/js/31.958a6bd0.js"><link rel="prefetch" href="/assets/js/4.6f8f1600.js"><link rel="prefetch" href="/assets/js/5.24fc9d20.js"><link rel="prefetch" href="/assets/js/6.bfe2e6eb.js"><link rel="prefetch" href="/assets/js/7.81fa3166.js"><link rel="prefetch" href="/assets/js/8.20ae270d.js"><link rel="prefetch" href="/assets/js/9.bb64e86b.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.49f7e903.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">大前端宝典</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/house/" class="nav-link">
+  house
+</a></div><div class="nav-item"><a href="/front/" class="nav-link router-link-active">
+  大前端
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/house/" class="nav-link">
+  house
+</a></div><div class="nav-item"><a href="/front/" class="nav-link router-link-active">
+  大前端
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="如何实现一个元素的水平垂直居中"><a href="#如何实现一个元素的水平垂直居中" class="header-anchor">#</a> 如何实现一个元素的水平垂直居中</h1> <blockquote><p>回答者：<a href="https://github.com/jianshe" target="_blank" rel="noopener noreferrer">jianshe<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></blockquote> <h2 id="主要有几下几种方案"><a href="#主要有几下几种方案" class="header-anchor">#</a> 主要有几下几种方案</h2> <p>1.使用flex布局</p> <div class="language- extra-class"><pre class="language-text"><code>.container {
+  display:flex;
+  display:-webkit-flex;
+  justify-content: center;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  width:300px;
+  height:200px;
+  background-color:#eee;
+}
+
+.item {
+  width:50px;
+  height:50px;
+  background-color:#ff7400;
+}
+</code></pre></div><blockquote><p>效果可以见<a href="https://codepen.io/jianshe/pen/dyMdzze" target="_blank" rel="noopener noreferrer">codepen<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></blockquote> <p>2.脱离文档流元素的居中</p> <div class="language- extra-class"><pre class="language-text"><code>.container {
+  width:300px;
+  height:200px;
+  background-color:#eee;
+  position:relative;
+}
+.item {
+  width:50px;
+  height:50px;
+  background-color:#ff7400;
+  position:absolute;
+  margin:auto;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+}
+</code></pre></div><blockquote><p>效果可以见<a href="https://codepen.io/jianshe/pen/RwaQZEd" target="_blank" rel="noopener noreferrer">codepen<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></blockquote> <p>3.负margin法</p> <div class="language- extra-class"><pre class="language-text"><code>  .container {
+    width:300px;
+    height:200px;
+    background-color:#eee;
+    position:relative;
+  }
+  .item {
+    width:50px;
+    height:50px;
+    background-color:#ff7400;
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-top:-25px; /*height的一半*/
+    margin-left:-25px; /*width的一半*/
+  }
+</code></pre></div><blockquote><p>效果可以见<a href="https://codepen.io/jianshe/pen/RwaQLrX" target="_blank" rel="noopener noreferrer">codepen<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></blockquote> <p>4.利用textAlign:center实现行内元素的水平居中，再利用verticalAlign:middle实现行内元素的垂直居中，前提是要先加上伪元素并给设置高度为100%，用过elementUI的可以去看看其消息弹窗居中实现方式就是如此。</p> <div class="language- extra-class"><pre class="language-text"><code>.container {
+  width:300px;
+  height:200px;
+  background-color:#eee;
+  text-align:center;
+}
+.container:after{
+  content:&quot;&quot;;
+  display:inline-block;
+  height:100%;
+  width:0;
+  vertical-align:middle;
+}
+.item {
+  width:50px;
+  height:50px;
+  background-color:#ff7400;
+  display:inline-block;
+  vertical-align:middle;
+}
+</code></pre></div><blockquote><p>效果可以见<a href="https://codepen.io/jianshe/pen/bGpLoBw" target="_blank" rel="noopener noreferrer">codepen<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></blockquote> <p>5.相对定位下，使用绝对定位，利用margin偏移外容器的50%，再利用translate平移回补自身宽高的50%即可</p> <div class="language- extra-class"><pre class="language-text"><code>  .container {
+    width:300px;
+    height:200px;
+    background-color:#eee;
+    position:relative;
+  }
+  .item {
+    width:50px;
+    height:50px;
+    background-color:#ff7400;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+  }
+</code></pre></div><blockquote><p>效果可以见<a href="https://codepen.io/jianshe/pen/KKzQXmv" target="_blank" rel="noopener noreferrer">codepen<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></blockquote> <p>6.使用<code>grid</code>,它是做二维布局的，但是只有一个子元素时，一维布局与二维布局就一样了。结合<code>justify-content</code>/<code>justify-items</code>和 <code>align-content/align-items</code> 就有四种方案</p> <div class="language-css extra-class"><pre class="language-css"><code>  <span class="token selector">.container</span> <span class="token punctuation">{</span>
+    <span class="token property">display</span><span class="token punctuation">:</span>grid<span class="token punctuation">;</span>
+    <span class="token property">justify-content</span><span class="token punctuation">:</span>center<span class="token punctuation">;</span>
+    <span class="token property">align-content</span><span class="token punctuation">:</span>center<span class="token punctuation">;</span>
+
+    <span class="token property">width</span><span class="token punctuation">:</span>300px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span>200px<span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span>#eee<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">.item</span> <span class="token punctuation">{</span>
+    <span class="token property">width</span><span class="token punctuation">:</span>50px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span>50px<span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span>#ff7400<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre></div><div class="language-css extra-class"><pre class="language-css"><code>  <span class="token selector">.container</span> <span class="token punctuation">{</span>
+    <span class="token property">display</span><span class="token punctuation">:</span>grid<span class="token punctuation">;</span>
+    <span class="token property">justify-content</span><span class="token punctuation">:</span>center<span class="token punctuation">;</span>
+    <span class="token property">align-items</span><span class="token punctuation">:</span>center<span class="token punctuation">;</span>
+
+    <span class="token property">width</span><span class="token punctuation">:</span>300px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span>200px<span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span>#eee<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">.item</span> <span class="token punctuation">{</span>
+    <span class="token property">width</span><span class="token punctuation">:</span>50px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span>50px<span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span>#ff7400<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre></div><div class="language-css extra-class"><pre class="language-css"><code>  <span class="token selector">.container</span> <span class="token punctuation">{</span>
+    <span class="token property">display</span><span class="token punctuation">:</span>grid<span class="token punctuation">;</span>
+    <span class="token property">justify-items</span><span class="token punctuation">:</span>center<span class="token punctuation">;</span>
+    <span class="token property">align-content</span><span class="token punctuation">:</span>center<span class="token punctuation">;</span>
+
+    <span class="token property">width</span><span class="token punctuation">:</span>300px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span>200px<span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span>#eee<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">.item</span> <span class="token punctuation">{</span>
+    <span class="token property">width</span><span class="token punctuation">:</span>50px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span>50px<span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span>#ff7400<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre></div><div class="language-css extra-class"><pre class="language-css"><code>  <span class="token selector">.container</span> <span class="token punctuation">{</span>
+    <span class="token property">display</span><span class="token punctuation">:</span>grid<span class="token punctuation">;</span>
+    <span class="token property">justify-items</span><span class="token punctuation">:</span>center<span class="token punctuation">;</span>
+    <span class="token property">align-items</span><span class="token punctuation">:</span>center<span class="token punctuation">;</span>
+
+    <span class="token property">width</span><span class="token punctuation">:</span>300px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span>200px<span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span>#eee<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">.item</span> <span class="token punctuation">{</span>
+    <span class="token property">width</span><span class="token punctuation">:</span>50px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span>50px<span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span>#ff7400<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre></div><blockquote><p>效果可以见<a href="https://codepen.io/jianshe/pen/BaKYwJL" target="_blank" rel="noopener noreferrer">codepen<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></blockquote></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.23524ab7.js" defer></script><script src="/assets/js/2.4b085c19.js" defer></script><script src="/assets/js/19.8a3c62fa.js" defer></script>
+  </body>
+</html>

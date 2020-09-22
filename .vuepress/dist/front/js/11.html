@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>深入理解javascript原型和闭包—简述【执行上下文】下 | 大前端宝典</title>
+    <meta name="generator" content="VuePress 1.5.4">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" content="每天至少一个问题，有关前端，后端，graphql，devops，微服务以及软技能，促进个人职业成长，敲开大厂之门。">
+    <link rel="preload" href="/assets/css/0.styles.49f7e903.css" as="style"><link rel="preload" href="/assets/js/app.23524ab7.js" as="script"><link rel="preload" href="/assets/js/2.4b085c19.js" as="script"><link rel="preload" href="/assets/js/22.ce508e85.js" as="script"><link rel="prefetch" href="/assets/js/10.ee5396e8.js"><link rel="prefetch" href="/assets/js/11.2452dac9.js"><link rel="prefetch" href="/assets/js/12.ee7f806c.js"><link rel="prefetch" href="/assets/js/13.6846191f.js"><link rel="prefetch" href="/assets/js/14.642107b1.js"><link rel="prefetch" href="/assets/js/15.2bc4c1f7.js"><link rel="prefetch" href="/assets/js/16.2e738211.js"><link rel="prefetch" href="/assets/js/17.50d14f43.js"><link rel="prefetch" href="/assets/js/18.6e407510.js"><link rel="prefetch" href="/assets/js/19.8a3c62fa.js"><link rel="prefetch" href="/assets/js/20.980ba8ff.js"><link rel="prefetch" href="/assets/js/21.5d15a2db.js"><link rel="prefetch" href="/assets/js/23.b02b43f1.js"><link rel="prefetch" href="/assets/js/24.4af3b9b8.js"><link rel="prefetch" href="/assets/js/25.66df5858.js"><link rel="prefetch" href="/assets/js/26.24afa34e.js"><link rel="prefetch" href="/assets/js/27.dbec4f43.js"><link rel="prefetch" href="/assets/js/28.875614ec.js"><link rel="prefetch" href="/assets/js/29.ee78177e.js"><link rel="prefetch" href="/assets/js/3.75d04044.js"><link rel="prefetch" href="/assets/js/30.b7deef22.js"><link rel="prefetch" href="/assets/js/31.958a6bd0.js"><link rel="prefetch" href="/assets/js/4.6f8f1600.js"><link rel="prefetch" href="/assets/js/5.24fc9d20.js"><link rel="prefetch" href="/assets/js/6.bfe2e6eb.js"><link rel="prefetch" href="/assets/js/7.81fa3166.js"><link rel="prefetch" href="/assets/js/8.20ae270d.js"><link rel="prefetch" href="/assets/js/9.bb64e86b.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.49f7e903.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">大前端宝典</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/house/" class="nav-link">
+  house
+</a></div><div class="nav-item"><a href="/front/" class="nav-link router-link-active">
+  大前端
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/house/" class="nav-link">
+  house
+</a></div><div class="nav-item"><a href="/front/" class="nav-link router-link-active">
+  大前端
+</a></div><div class="nav-item"><a href="/linux/" class="nav-link">
+  linux
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h3 id="深入理解javascript原型和闭包-简述【执行上下文】下"><a href="#深入理解javascript原型和闭包-简述【执行上下文】下" class="header-anchor">#</a> 深入理解javascript原型和闭包—简述【执行上下文】下</h3> <p>上一篇我们讲到在全局环境下的代码段中，执行上下文环境中有如下数据：</p> <ul><li>变量、函数表达式--变量声明，默认赋值为undefined;</li> <li>this -- 赋值；</li> <li>函数声明 --赋值；</li></ul> <p>如果在函数中，除了以上数据之外，还会有其他数据。先看以下代码：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">fn</span><span class="token punctuation">(</span><span class="token parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">fn</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [10] 10</span>
+</code></pre></div><p>以上代码展示了在函数体的语句执行之前，arguments变量和函数的参数都已经被赋值。从这里可以看出，**函数每被调用一次，都会产生一个新的执行上下文环境。**因为不同的调用可能就会有不同的参数。</p> <p>另外一点不同在于，**函数在定义的时候（不是调用的时候），就已经确定了函数体内部自由变量的作用域。**至于”自由变量“和”作用域“是后面要专门拿出来讲述的重点，这里就先点到为止。用一个例子说明一下：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// a是自由变量</span>
+<span class="token punctuation">}</span><span class="token comment">// 函数创建时，就确定了a要取值的作用域</span>
+<span class="token keyword">function</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token parameter">f</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+    <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 打印&quot;10&quot;,而不是&quot;20&quot;</span>
+<span class="token punctuation">}</span>
+<span class="token function">bar</span><span class="token punctuation">(</span>fn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>好了，总结完了函数的附加内容，</p> <p>全局代码的上下文环境数据内容为：</p> <table><thead><tr><th>普通变量（包括函数表达式），如： vara = 10;</th> <th>声明（默认赋值为undefined）</th></tr></thead> <tbody><tr><td>函数声明，如： function fn() { }</td> <td>赋值</td></tr> <tr><td>this</td> <td>赋值</td></tr></tbody></table> <p>如果代码段是函数体，那么在此基础上需要附加：</p> <table><thead><tr><th>参数</th> <th>赋值</th></tr></thead> <tbody><tr><td>arguments</td> <td>赋值</td></tr> <tr><td>自由变量的取值作用域</td> <td>赋值</td></tr></tbody></table> <p>给执行上下文环境下一个通俗的定义-- <strong>在执行代码之前，把将要用到的所有的变量都事先拿出来，有的直接赋值了，有的先用undefined占个空。</strong></p> <p>了解了执行上下文环境中的数据信息，你就不用再去死记硬背那些可恶的面试题了。理解了就不用背诵！</p> <p>讲完了上下文环境，又来了新的问题--在执行js代码时，会有数不清的函数调用次数，会产生许多个上下文环境。这么多上下文环境该如何管理，以及如何销毁释放内存呢？下一节将通过&quot;执行上下文栈&quot;来解释这个问题。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.23524ab7.js" defer></script><script src="/assets/js/2.4b085c19.js" defer></script><script src="/assets/js/22.ce508e85.js" defer></script>
+  </body>
+</html>
