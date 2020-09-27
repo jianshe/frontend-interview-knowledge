@@ -16,4 +16,7 @@
 + [【Q016】 深入理解javascript原型和闭包之[从自由变量到作用域链]](js/16.html)
 + [【Q017】 深入理解javascript原型和闭包之[闭包一]](js/17.html)
 + [【Q018】 深入理解javascript原型和闭包之[闭包二]](js/18.html)
-+ [【Q020】 javascript的new操作都做了什么？](js/20.html)
++ [【Q019】 防抖和节流原理分析--防抖](js/19.html)
++ [【Q020】 防抖和节流原理分析--节流](js/20.html)
++ [【Q021】 防抖和节流原理分析--防抖](js/20.html)
++ [【Q028】 javascript的new操作都做了什么？](js/28.html)
