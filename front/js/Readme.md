@@ -18,5 +18,6 @@
 + [【Q018】 深入理解javascript原型和闭包之[闭包二]](js/18.html)
 + [【Q019】 防抖和节流原理分析--防抖](js/19.html)
 + [【Q020】 防抖和节流原理分析--节流](js/20.html)
-+ [【Q021】 防抖和节流原理分析--防抖](js/20.html)
++ [【Q021】 Promise里的代码为什么比setTimeout先执行？](js/21.html)
++ [【Q022】 如何写出一个惊艳面试官的深拷贝？](js/22.html)
 + [【Q028】 javascript的new操作都做了什么？](js/28.html)
