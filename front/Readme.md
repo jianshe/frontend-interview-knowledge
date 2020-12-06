@@ -21,4 +21,6 @@
 + [【Q020】 防抖和节流原理分析--节流](js/20.html)
 + [【Q021】 Promise里的代码为什么比setTimeout先执行？](js/21.html)
 + [【Q022】 如何写出一个惊艳面试官的深拷贝？](js/22.html)
++ [【Q023】 javascript设计模式之单例模式？](js/23.html)
++ [【Q024】 javascript设计模式之构造函数模式？](js/24.html)
 + [【Q028】 javascript的new操作都做了什么？](js/28.html)
