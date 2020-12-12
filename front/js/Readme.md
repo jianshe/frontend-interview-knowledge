@@ -24,5 +24,7 @@
 + [【Q024】 javascript设计模式之构造函数模式](js/24.html)
 + [【Q025】 javascript设计模式之建造者模式](js/25.html)
 + [【Q026】 javascript设计模式之工厂模式](js/26.html)
++ [【Q027】 javascript设计模式之装饰者模式](js/27.html)
++ [【Q028】 javascript设计模式之外观模式](js/28.html)
 + [【Q048】 javascript的new操作都做了什么？](js/48.html)
 + [【Q049】 JavaScript可视化：Promise和Async/Await](js/49.html)
