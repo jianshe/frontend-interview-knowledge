@@ -29,3 +29,4 @@
 + [【Q028】 javascript设计模式之外观模式](js/28.html)
 + [【Q048】 javascript的new操作都做了什么？](js/48.html)
 + [【Q049】 JavaScript可视化：Promise和Async/Await](js/49.html)
++ [【Q050】 javascript中Proxy和defineProperty对比](js/50.html)

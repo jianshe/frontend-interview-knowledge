@@ -143,6 +143,25 @@
         [
           "js/49",
           "JavaScript可视化：Promise和Async/Await？⭐️"
+        ],
+        [
+          "js/50",
+          "javascript中Proxy和defineProperty对比 ⭐️"
+        ]
+      ]
+    },
+    {
+      "name": "server",
+      "title": "server",
+      "collabsable": false,
+      "children": [
+        [
+          "server/",
+          "目录"
+        ],
+        [
+          "server/51",
+          "安装Docker到服务器⭐️"
         ]
       ]
     }
