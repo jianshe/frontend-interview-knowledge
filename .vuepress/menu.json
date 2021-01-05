@@ -162,6 +162,10 @@
         [
           "server/51",
           "安装Docker到服务器⭐️"
+        ],
+        [
+          "server/52",
+          "CentOS安装NodeJS⭐️"
         ]
       ]
     }

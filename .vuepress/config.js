@@ -13,7 +13,7 @@ module.exports = {
     nav: [
       { text: 'house', link: '/house/' },
       { text: '大前端', link: '/front/' },
-      { text: 'linux', link: '/linux/'}
+      { text: '后端', link: '/backend/'}
     ],
     lastUpdated: 'Last Updated',
   }
