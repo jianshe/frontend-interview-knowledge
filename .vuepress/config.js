@@ -13,7 +13,8 @@ module.exports = {
     nav: [
       { text: 'house', link: '/house/' },
       { text: '大前端', link: '/front/' },
-      { text: '后端', link: '/backend/'}
+      { text: '后端', link: '/backend/'},
+      { text: '数据结构与算法', link: '/algorithm/'}
     ],
     lastUpdated: 'Last Updated',
   }

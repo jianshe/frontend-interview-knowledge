@@ -235,5 +235,26 @@
         ]
       ]
     }
+  ],
+  "/algorithm/": [
+    [
+      "",
+      "目录"
+    ],
+    {
+      "name": "链表及经典问题",
+      "title": "链表及经典问题",
+      "collabsable": false,
+      "children": [
+        [
+          "chainTable/",
+          "目录"
+        ],
+        [
+          "chainTable/300",
+          "单向链表⭐️"
+        ]
+      ]
+    }
   ]
 }
