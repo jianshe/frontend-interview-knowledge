@@ -3,3 +3,8 @@
 + [【Q301】链表典型应用场景（一）](chainTable/301.html)
 + [【Q302】链表典型应用场景（二）](chainTable/302.html)
 + [【Q303】链表典型应用场景（三）](chainTable/303.html)
++ [【Q304】链表典型应用场景（四）](chainTable/304.html)
++ [【Q305】队列](queue/305.html)
++ [【Q306】队列典型应用场景（一）](queue/306.html)
++ [【Q307】队列典型应用场景（二）](queue/307.html)
++ [【Q308】队列典型应用场景（三）](queue/308.html)
