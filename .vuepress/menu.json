@@ -137,6 +137,10 @@
           "javascript设计模式之外观模式 ⭐"
         ],
         [
+          "js/29",
+          "深入分析Promise实现细节 ⭐"
+        ],
+        [
           "js/48",
           "javascript的new操作都做了什么？⭐️"
         ],
@@ -147,6 +151,10 @@
         [
           "js/50",
           "javascript中Proxy和defineProperty对比 ⭐️"
+        ],
+        [
+          "js/51",
+          "手写bind ⭐️"
         ]
       ]
     },

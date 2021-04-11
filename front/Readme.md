@@ -27,6 +27,8 @@
 + [【Q026】 javascript设计模式之工厂模式](js/26.html)
 + [【Q027】 javascript设计模式之装饰者模式](js/27.html)
 + [【Q028】 javascript设计模式之外观模式](js/28.html)
++ [【Q029】 深入分析Promise实现细节](js/29.html)
 + [【Q048】 javascript的new操作都做了什么？](js/48.html)
 + [【Q049】 JavaScript可视化：Promise和Async/Await](js/49.html)
 + [【Q050】 javascript中Proxy和defineProperty对比](js/50.html)
++ [【Q051】 手写bind](js/51.html)
