@@ -32,3 +32,4 @@
 + [【Q049】 JavaScript可视化：Promise和Async/Await](49.html)
 + [【Q050】 javascript中Proxy和defineProperty对比](50.html)
 + [【Q051】 手写bind](51.html)
++ [【Q052】 call和apply](52.html)
