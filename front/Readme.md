@@ -33,3 +33,4 @@
 + [【Q050】 javascript中Proxy和defineProperty对比](js/50.html)
 + [【Q051】 手写bind](js/51.html)
 + [【Q052】 call和apply](js/52.html)
++ [【QrRouter01】 call和apply](vur-router/vRouter01.html)

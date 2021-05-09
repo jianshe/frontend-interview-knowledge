@@ -178,6 +178,21 @@
       ]
     },
     {
+      "name": "vue-router",
+      "title": "vue-router",
+      "collabsable": false,
+      "children": [
+        [
+          "vue-router/",
+          "目录"
+        ],
+        [
+          "vue-router/vRouter01",
+          "vue-router 实现原理⭐️"
+        ]
+      ]
+    },
+    {
       "name": "element",
       "title": "element",
       "collabsable": false,
